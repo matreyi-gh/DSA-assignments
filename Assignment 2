@@ -1,0 +1,279 @@
+Q1.)
+
+#include <iostream>
+using namespace std;
+
+int linearSearch(int arr[], int n, int key) 
+{
+    for (int i = 0; i < n; i++) 
+    {
+        if (arr[i] == key)
+            return i;  
+    }
+    return -1; 
+}
+
+int binarySearch(int arr[], int n, int key) 
+{
+    int low = 0, high = n - 1;
+    while (low <= high) 
+    {
+        int mid = (low + high) / 2;
+
+        if (arr[mid] == key)
+        {
+            return mid;
+        }
+            
+        else if 
+        {
+            (arr[mid] > key)
+            high = mid - 1;
+        }
+            
+        else
+            low = mid + 1;   
+    }
+    return -1;
+}
+
+int main() 
+{
+    int n, key;
+    cout << "Enter number of elements: ";
+    cin >> n;
+
+    int arr[100];
+    cout << "Enter " << n << " elements (binary search): ";
+    for (int i = 0; i < n; i++) 
+    {
+        cin >> arr[i];
+    }
+
+    cout << "Enter element to search: ";
+    cin >> key;
+
+    int pos1 = linearSearch(arr, n, key);
+    if (pos1 != -1)
+    {
+         cout << "Linear search: Found at position " << pos1 + 1 << endl;
+    }
+       
+    else
+        cout << "Linear search: Element not found" << endl;
+
+    int pos2 = binarySearch(arr, n, key);
+    if (pos2 != -1)
+    {
+        cout << "Binary search: Found at position " << pos2 + 1 << endl;
+    }
+        
+    else
+        cout << "Binary search: Element not found" << endl;
+
+    return 0;
+}
+
+
+
+Q2.)
+
+#include <iostream>
+using namespace std;
+
+int main() 
+{
+    int arr[] = {64, 34, 25, 12, 22, 11, 90};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    cout << "Original array: ";
+    for (int i = 0; i < n; i++)
+    {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+
+    for (int i = 0; i < n - 1; i++) 
+    {
+        for (int j = 0; j < n - i - 1; j++) 
+        {
+            if (arr[j] > arr[j + 1]) 
+            {
+                int temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+            }
+        }
+    }
+
+    cout << "Sorted array: ";
+    for (int i = 0; i < n; i++)
+    {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+
+    return 0;
+}
+
+
+
+Q3.a)
+
+#include <iostream>
+using namespace std;
+
+int Missingnum (int arr[], int n) 
+{
+    for (int i = 0; i < n-1; i++) 
+    {
+        if (arr[i] != i + 1)
+            return i + 1;  
+    }
+    return n; 
+}
+
+int main() 
+{
+    int n;
+    cout << "Enter value of n: ";
+    cin >> n;
+
+    int arr[100];
+    cout << "Enter " << n-1 << " elements of the sorted array: ";
+    for (int i = 0; i < n-1; i++) 
+    {
+        cin >> arr[i];
+    }
+
+    cout << "Missing number (Linear Search) = " 
+         << Missingnum(arr, n) << endl;
+
+    return 0;
+}
+
+
+Q3.b)
+
+#include <iostream>
+using namespace std;
+
+int Missingnum(int arr[], int n) 
+{
+    int low = 0, high = n - 2; 
+    while (low <= high) 
+    {
+        int mid = (low + high) / 2;
+        if (arr[mid] == mid + 1) 
+        {
+            low = mid + 1;
+        } 
+        else 
+        {
+            high = mid - 1;
+        }
+    }
+    return low + 1;
+}
+
+int main() 
+{
+    int n;
+    cout << "Enter value of n: ";
+    cin >> n;
+
+    int arr[100];
+    cout << "Enter " << n-1 << " elements of the sorted array: ";
+    for (int i = 0; i < n-1; i++) 
+    {
+        cin >> arr[i];
+    }
+
+    cout << "Missing number (Binary) = " 
+         << Missingnum(arr, n) << endl;
+
+    return 0;
+}
+
+
+Q4.a)
+
+#include <iostream>
+#include <cstring>
+using namespace std;
+
+int main() 
+{
+    char str1[100], str2[100];
+    
+    cout << "Enter first string: ";
+    cin.getline(str1, 100);
+    cout << "Enter second string: ";
+    cin.getline(str2, 100);
+
+    strcat(str1, str2); 
+
+    cout << "Concatenated string: " << str1 << endl;
+
+    return 0;
+}
+
+
+Q4.b)
+
+#include <iostream>
+#include <cstring>
+using namespace std;
+
+int main() 
+{
+    char str[100];
+    cout << "Enter a string: ";
+    cin.getline(str, 100);
+
+    int n = strlen(str);
+    for (int i = 0; i < n / 2; i++) 
+    {
+        char temp = str[i];
+        str[i] = str[n - i - 1];
+        str[n - i - 1] = temp;
+    }
+
+    cout << "Reversed string: " << str << endl;
+
+    return 0;
+}
+
+
+Q4.c)
+
+#include <iostream>
+#include <cstring>
+using namespace std;
+
+bool isavowel(char ch) 
+{
+    ch = tolower(ch);
+    return (ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u');
+}
+
+int main() 
+{
+    char str[100], result[100];
+    cout << "Enter a string: ";
+    cin.getline(str, 100);
+
+    int j = 0;
+    for (int i = 0; i < strlen(str); i++) {
+        if (!isVowel(str[i])) 
+        {
+            result[j++] = str[i];
+        }
+    }
+    result[j] = '\0';
+    cout << "String after deleting vowels: " << result << endl;
+
+    return 0;
+}
+
+
