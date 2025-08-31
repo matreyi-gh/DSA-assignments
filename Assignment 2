@@ -277,3 +277,102 @@ int main()
 }
 
 
+Q4.e)
+
+#include <iostream>
+#include <cctype> 
+using namespace std;
+
+int main() 
+{
+    char ch;
+    cout << "Enter an uppercase character: ";
+    cin >> ch;
+
+    char lower = tolower(ch);
+
+    cout << "Lowercase character: " << lower << endl;
+
+    return 0;
+}
+
+
+
+Q7.)
+
+#include <iostream>
+using namespace std;
+
+int main() 
+{
+    int n;
+    cout << "Enter number of elements: ";
+    cin >> n;
+
+    int arr[100];  
+    cout << "Enter " << n << " elements:\n";
+    for (int i = 0; i < n; i++) 
+    {
+        cin >> arr[i];
+    }
+
+    int count = 0; 
+    for (int i = 0; i < n; i++) 
+    {
+        for (int j = i + 1; j < n; j++) 
+        {
+            if (arr[i] > arr[j]) 
+            {
+                count++;
+                cout << "Inversion: (" << arr[i] << ", " << arr[j] << ")\n";
+            }
+        }
+    }
+
+    cout << "Total number of inversions = " << count << endl;
+
+    return 0;
+}
+
+
+
+Q8.)
+
+#include <iostream>
+using namespace std;
+
+int main() 
+{
+    int n;
+    cout << "Enter number of elements: ";
+    cin >> n;
+
+    int arr[100]; 
+    cout << "Enter " << n << " elements:\n";
+    for (int i = 0; i < n; i++) 
+    {
+        cin >> arr[i];
+    }
+
+    int count = 0;
+    for (int i = 0; i < n; i++) 
+    {
+        bool duplicate = false;
+        for (int j = 0; j < i; j++) 
+        {
+            if (arr[i] == arr[j]) {
+                duplicate = true;
+                break;
+            }
+        }
+
+        if (!duplicate) 
+        {
+            count++;
+        }
+    }
+
+    cout << "Total number of distinct elements = " << count << endl;
+
+    return 0;
+}
