@@ -30,3 +30,143 @@ int main()
 
 
 
+Q3.)
+
+#include <iostream> 
+#include <string>  
+#include <stack>   
+using namespace std;
+int main() 
+{
+    string expression;
+    cout << "Enter an expression with brackets (e.g., {[()]}): ";
+    cin >> expression;
+    stack<char> s;
+    for (int i = 0; i < expression.length(); i++) 
+    {
+        char ch = expression[i]; 
+        if (ch == '(' || ch == '{' || ch == '[') 
+        {
+            s.push(ch);
+        }
+        else if (ch == ')' || ch == '}' || ch == ']') 
+        {
+            if (s.empty()) 
+            {
+                cout << "The expression is NOT balanced." << endl;
+                return 0;
+            }
+            char top = s.top();
+            
+            if ((ch == ')' && top != '(') ||
+                (ch == '}' && top != '{') ||
+                (ch == ']' && top != '[')) 
+                {
+                cout << "The expression is NOT balanced." << endl;
+                return 0;
+            }
+            s.pop(); 
+        }
+    }
+    if (s.empty()) 
+    {
+        cout << "The expression is balanced." << endl;
+    } 
+    else 
+    {
+        cout << "The expression is NOT balanced." << endl;
+    }
+
+    return 0; 
+}
+
+
+
+
+Q1.)
+
+#include <iostream>
+using namespace std;
+int main()
+{
+    const int size = 5;
+    int stack_arr[size];
+    int top = -1;
+    int choice;
+    int value;
+
+    do {
+        cout << "\n--- Simple stack menu ---" << endl;
+        cout << "1. Push an element" << endl;
+        cout << "2. Pop an element" << endl;
+        cout << "3. Show the top element (peek)" << endl;
+        cout << "4. Show all elements (display)" << endl;
+        cout << "5. Exit" << endl;
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice)
+        {
+            case 1:
+                if (top == size - 1)
+                {
+                    cout << "Stack is full!" << endl;
+                } 
+                else
+                {
+                    cout << "Enter the number to add: ";
+                    cin >> value;
+                    top = top + 1;
+                    stack_arr[top] = value;
+                    cout << value << " was added to the stack" << endl;
+                }
+                break;
+                
+            case 2:
+                if (top == -1)
+                {
+                    cout << "Stack is empty!" << endl;
+                }
+                else
+                {
+                    cout << stack_arr[top] << " was removed from the stack" << endl;
+                    top = top - 1;
+                }
+                break;
+
+            case 3:
+                if (top == -1)
+                {
+                    cout << "The stack is empty." << endl;
+                } 
+                else
+                {
+                    cout << "The top element is: " << stack_arr[top] << endl;
+                }
+                break;
+
+            case 4:
+                if (top == -1)
+                {
+                    cout << "The stack is empty." << endl;
+                } 
+                else
+                {
+                    cout << "Stack contents (top to bottom):" << endl;
+                    for (int i = top; i >= 0; i--) 
+                    {
+                        cout << stack_arr[i] << endl;
+                    }
+                }
+                break;
+
+            case 5:
+                cout << "exit" << endl;
+                break;
+        }
+
+    } while (choice != 5);
+
+    return 0;
+}
+
