@@ -1,0 +1,279 @@
+Q1)
+
+
+#include <iostream>
+using namespace std;
+
+struct Node {
+    int data;
+    Node *prev, *next;
+};
+
+Node* head = NULL;
+
+void insertFirst(int x) {
+    Node* n = new Node();
+    n->data = x;
+    if (!head) {
+        n->next = n->prev = n;
+        head = n;
+    } else {
+        Node* last = head->prev;
+        n->next = head;
+        n->prev = last;
+        last->next = n;
+        head->prev = n;
+        head = n;
+    }
+}
+
+void insertLast(int x) {
+    if (!head) {
+        insertFirst(x);
+        return;
+    }
+    Node* n = new Node();
+    Node* last = head->prev;
+    n->data = x;
+    n->next = head;
+    n->prev = last;
+    last->next = n;
+    head->prev = n;
+}
+
+void insertAfter(int val, int x) {
+    if (!head) return;
+    Node* t = head;
+    do {
+        if (t->data == val) {
+            Node* n = new Node();
+            n->data = x;
+            n->next = t->next;
+            n->prev = t;
+            t->next->prev = n;
+            t->next = n;
+            return;
+        }
+        t = t->next;
+    } while (t != head);
+}
+
+void deleteValue(int val) {
+    if (!head) return;
+    Node* t = head;
+    do {
+        if (t->data == val) {
+            if (t->next == t) {
+                delete t;
+                head = NULL;
+                return;
+            }
+            t->prev->next = t->next;
+            t->next->prev = t->prev;
+            if (t == head) head = t->next;
+            delete t;
+            return;
+        }
+        t = t->next;
+    } while (t != head);
+}
+
+void search(int val) {
+    if (!head) return;
+    Node* t = head;
+    int pos = 1;
+    do {
+        if (t->data == val) {
+            cout << pos << endl;
+            return;
+        }
+        t = t->next;
+        pos++;
+    } while (t != head);
+    cout << "Not Found\n";
+}
+
+void display() {
+    if (!head) return;
+    Node* t = head;
+    do {
+        cout << t->data << " ";
+        t = t->next;
+    } while (t != head);
+    cout << endl;
+}
+
+int main() {
+    int ch, x, y;
+    while (1) {
+        cin >> ch;
+        switch (ch) {
+            case 1: cin >> x; insertFirst(x); break;
+            case 2: cin >> x; insertLast(x); break;
+            case 3: cin >> y >> x; insertAfter(y, x); break;
+            case 4: cin >> x; deleteValue(x); break;
+            case 5: cin >> x; search(x); break;
+            case 6: display(); break;
+            case 7: return 0;
+        }
+    }
+}
+
+
+
+
+Q2)
+
+
+#include <iostream>
+using namespace std;
+
+struct Node {
+    int data;
+    Node* next;
+};
+
+int main() {
+    int arr[] = {20,100,40,80,60};
+    Node* head = NULL;
+    Node* last = NULL;
+
+    for (int i = 0; i < 5; i++) {
+        Node* n = new Node();
+        n->data = arr[i];
+        if (!head) {
+            head = n;
+            n->next = head;
+        } else {
+            last->next = n;
+            n->next = head;
+        }
+        last = n;
+    }
+
+    Node* t = head;
+    do {
+        cout << t->data << " ";
+        t = t->next;
+    } while (t != head);
+    cout << head->data;
+}
+
+
+
+Q3(i)
+
+
+#include <iostream>
+using namespace std;
+
+struct Node {
+    int data;
+    Node *prev, *next;
+};
+
+int main() {
+    Node* head = NULL;
+    for (int i = 1; i <= 5; i++) {
+        Node* n = new Node();
+        n->data = i;
+        n->next = head;
+        n->prev = NULL;
+        if (head) head->prev = n;
+        head = n;
+    }
+
+    int count = 0;
+    Node* t = head;
+    while (t) {
+        count++;
+        t = t->next;
+    }
+    cout << count;
+}
+
+Q3(ii)
+
+
+#include <iostream>
+using namespace std;
+
+struct Node {
+    int data;
+    Node* next;
+};
+
+int main() {
+    int arr[] = {1,2,3,4};
+    Node* head = NULL;
+    Node* last = NULL;
+
+    for (int i = 0; i < 4; i++) {
+        Node* n = new Node();
+        n->data = arr[i];
+        if (!head) {
+            head = n;
+            n->next = head;
+        } else {
+            last->next = n;
+            n->next = head;
+        }
+        last = n;
+    }
+
+    int count = 0;
+    Node* t = head;
+    do {
+        count++;
+        t = t->next;
+    } while (t != head);
+    cout << count;
+}
+
+
+
+Q4)
+
+
+#include <iostream>
+using namespace std;
+
+struct Node {
+    char data;
+    Node *prev, *next;
+};
+
+int main() {
+    char arr[] = {'m','a','d','a','m'};
+    Node* head = NULL;
+    Node* tail = NULL;
+
+    for (int i = 0; i < 5; i++) {
+        Node* n = new Node();
+        n->data = arr[i];
+        n->next = NULL;
+        n->prev = tail;
+        if (!head) head = n;
+        if (tail) tail->next = n;
+        tail = n;
+    }
+
+    bool pal = true;
+    Node* left = head;
+    Node* right = tail;
+
+    while (left != right && left->prev != right) {
+        if (left->data != right->data) {
+            pal = false;
+            break;
+        }
+        left = left->next;
+        right = right->prev;
+    }
+
+    if (pal) cout << "Palindrome";
+    else cout << "Not Palindrome";
+}
+
+
+
