@@ -1,0 +1,310 @@
+Q1)
+
+#include <iostream>
+using namespace std;
+
+struct Node {
+    int data;
+    Node* left;
+    Node* right;
+};
+
+Node* newNode(int x) {
+    Node* n = new Node();
+    n->data = x;
+    n->left = n->right = NULL;
+    return n;
+}
+
+void preorder(Node* root) {
+    if (!root) return;
+    cout << root->data << " ";
+    preorder(root->left);
+    preorder(root->right);
+}
+
+void inorder(Node* root) {
+    if (!root) return;
+    inorder(root->left);
+    cout << root->data << " ";
+    inorder(root->right);
+}
+
+void postorder(Node* root) {
+    if (!root) return;
+    postorder(root->left);
+    postorder(root->right);
+    cout << root->data << " ";
+}
+
+int main() {
+    Node* root = newNode(1);
+    root->left = newNode(2);
+    root->right = newNode(3);
+
+    preorder(root);
+    cout << endl;
+    inorder(root);
+    cout << endl;
+    postorder(root);
+}
+
+
+
+
+Q2) 
+
+
+#include <iostream>
+using namespace std;
+
+struct Node {
+    int data;
+    Node *left, *right;
+};
+
+Node* insert(Node* root, int x) {
+    if (!root) {
+        Node* n = new Node();
+        n->data = x;
+        n->left = n->right = NULL;
+        return n;
+    }
+    if (x < root->data) root->left = insert(root->left, x);
+    else if (x > root->data) root->right = insert(root->right, x);
+    return root;
+}
+
+bool searchRec(Node* root, int x) {
+    if (!root) return false;
+    if (root->data == x) return true;
+    if (x < root->data) return searchRec(root->left, x);
+    return searchRec(root->right, x);
+}
+
+bool searchNonRec(Node* root, int x) {
+    while (root) {
+        if (root->data == x) return true;
+        if (x < root->data) root = root->left;
+        else root = root->right;
+    }
+    return false;
+}
+
+int minimum(Node* root) {
+    while (root->left) root = root->left;
+    return root->data;
+}
+
+int maximum(Node* root) {
+    while (root->right) root = root->right;
+    return root->data;
+}
+
+Node* successor(Node* root) {
+    root = root->right;
+    while (root->left) root = root->left;
+    return root;
+}
+
+Node* predecessor(Node* root) {
+    root = root->left;
+    while (root->right) root = root->right;
+    return root;
+}
+
+int main() {
+    Node* root = NULL;
+    root = insert(root, 20);
+    root = insert(root, 10);
+    root = insert(root, 30);
+    root = insert(root, 25);
+
+    cout << searchRec(root, 10) << endl;
+    cout << searchNonRec(root, 25) << endl;
+    cout << minimum(root) << endl;
+    cout << maximum(root) << endl;
+}
+
+
+
+
+Q3)
+
+
+#include <iostream>
+using namespace std;
+
+struct Node {
+    int data;
+    Node *left, *right;
+};
+
+Node* insert(Node* root, int x) {
+    if (!root) {
+        Node* n = new Node();
+        n->data = x;
+        n->left = n->right = NULL;
+        return n;
+    }
+    if (x < root->data) root->left = insert(root->left, x);
+    else if (x > root->data) root->right = insert(root->right, x);
+    return root;
+}
+
+Node* minNode(Node* root) {
+    while (root->left) root = root->left;
+    return root;
+}
+
+Node* deleteNode(Node* root, int x) {
+    if (!root) return root;
+    if (x < root->data) root->left = deleteNode(root->left, x);
+    else if (x > root->data) root->right = deleteNode(root->right, x);
+    else {
+        if (!root->left) return root->right;
+        if (!root->right) return root->left;
+        Node* t = minNode(root->right);
+        root->data = t->data;
+        root->right = deleteNode(root->right, t->data);
+    }
+    return root;
+}
+
+int maxDepth(Node* root) {
+    if (!root) return 0;
+    return 1 + max(maxDepth(root->left), maxDepth(root->right));
+}
+
+int minDepth(Node* root) {
+    if (!root) return 0;
+    return 1 + min(minDepth(root->left), minDepth(root->right));
+}
+
+int main() {
+    Node* root = NULL;
+    root = insert(root, 10);
+    root = insert(root, 5);
+    root = insert(root, 15);
+
+    root = deleteNode(root, 5);
+    cout << maxDepth(root) << endl;
+    cout << minDepth(root);
+}
+
+
+
+
+Q4)
+
+
+#include <iostream>
+#include <climits>
+using namespace std;
+
+struct Node {
+    int data;
+    Node *left, *right;
+};
+
+bool isBST(Node* root, int min, int max) {
+    if (!root) return true;
+    if (root->data <= min || root->data >= max) return false;
+    return isBST(root->left, min, root->data) &&
+           isBST(root->right, root->data, max);
+}
+
+int main() {
+    Node* root = new Node{10, NULL, NULL};
+    root->left = new Node{5, NULL, NULL};
+    root->right = new Node{15, NULL, NULL};
+
+    cout << isBST(root, INT_MIN, INT_MAX);
+}
+
+
+
+
+Q5) 
+
+
+#include <iostream>
+using namespace std;
+
+void heapify(int a[], int n, int i) {
+    int largest = i;
+    int l = 2*i + 1;
+    int r = 2*i + 2;
+
+    if (l < n && a[l] > a[largest]) largest = l;
+    if (r < n && a[r] > a[largest]) largest = r;
+
+    if (largest != i) {
+        swap(a[i], a[largest]);
+        heapify(a, n, largest);
+    }
+}
+
+void heapSort(int a[], int n) {
+    for (int i = n/2 - 1; i >= 0; i--)
+        heapify(a, n, i);
+
+    for (int i = n - 1; i > 0; i--) {
+        swap(a[0], a[i]);
+        heapify(a, i, 0);
+    }
+}
+
+int main() {
+    int a[] = {4,1,3,9,7};
+    int n = 5;
+    heapSort(a, n);
+    for (int i = 0; i < n; i++)
+        cout << a[i] << " ";
+}
+
+
+
+
+Q6) 
+
+
+#include <iostream>
+using namespace std;
+
+int heap[100], size = 0;
+
+void push(int x) {
+    heap[size] = x;
+    int i = size;
+    size++;
+    while (i != 0 && heap[(i-1)/2] < heap[i]) {
+        swap(heap[i], heap[(i-1)/2]);
+        i = (i-1)/2;
+    }
+}
+
+void pop() {
+    if (size == 0) return;
+    heap[0] = heap[size-1];
+    size--;
+    int i = 0;
+    while (true) {
+        int l = 2*i+1, r = 2*i+2, largest = i;
+        if (l < size && heap[l] > heap[largest]) largest = l;
+        if (r < size && heap[r] > heap[largest]) largest = r;
+        if (largest == i) break;
+        swap(heap[i], heap[largest]);
+        i = largest;
+    }
+}
+
+int main() {
+    push(10);
+    push(50);
+    push(30);
+    cout << heap[0] << endl;
+    pop();
+    cout << heap[0];
+}
+
