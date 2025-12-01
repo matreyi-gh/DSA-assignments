@@ -1,0 +1,241 @@
+Q1)
+
+
+#include <iostream>
+using namespace std;
+
+struct Node {
+    int data;
+    Node* next;
+};
+
+Node* head = NULL;
+
+void insertBegin(int x) {
+    Node* n = new Node();
+    n->data = x;
+    n->next = head;
+    head = n;
+}
+
+void insertEnd(int x) {
+    Node* n = new Node();
+    n->data = x;
+    n->next = NULL;
+    if (!head) {
+        head = n;
+        return;
+    }
+    Node* t = head;
+    while (t->next) t = t->next;
+    t->next = n;
+}
+
+void insertAfter(int val, int x) {
+    Node* t = head;
+    while (t && t->data != val) t = t->next;
+    if (!t) return;
+    Node* n = new Node();
+    n->data = x;
+    n->next = t->next;
+    t->next = n;
+}
+
+void deleteBegin() {
+    if (!head) return;
+    Node* t = head;
+    head = head->next;
+    delete t;
+}
+
+void deleteEnd() {
+    if (!head) return;
+    if (!head->next) {
+        delete head;
+        head = NULL;
+        return;
+    }
+    Node* t = head;
+    while (t->next->next) t = t->next;
+    delete t->next;
+    t->next = NULL;
+}
+
+void deleteValue(int val) {
+    if (!head) return;
+    if (head->data == val) {
+        deleteBegin();
+        return;
+    }
+    Node* t = head;
+    while (t->next && t->next->data != val) t = t->next;
+    if (!t->next) return;
+    Node* del = t->next;
+    t->next = del->next;
+    delete del;
+}
+
+void search(int val) {
+    Node* t = head;
+    int pos = 1;
+    while (t) {
+        if (t->data == val) {
+            cout << pos << endl;
+            return;
+        }
+        t = t->next;
+        pos++;
+    }
+    cout << "Not Found\n";
+}
+
+void display() {
+    Node* t = head;
+    while (t) {
+        cout << t->data << " ";
+        t = t->next;
+    }
+    cout << endl;
+}
+
+int main() {
+    int ch, x, y;
+    while (1) {
+        cin >> ch;
+        switch (ch) {
+            case 1: cin >> x; insertBegin(x); break;
+            case 2: cin >> x; insertEnd(x); break;
+            case 3: cin >> y >> x; insertAfter(y, x); break;
+            case 4: deleteBegin(); break;
+            case 5: deleteEnd(); break;
+            case 6: cin >> x; deleteValue(x);
+            case 7: cin >> x; search(x); break;
+            case 8: display(); break;
+            case 9: return 0;
+        }
+    }
+}
+
+Q2)
+
+#include <iostream>
+using namespace std;
+
+struct Node {
+    int data;
+    Node* next;
+};
+
+int main() {
+    int arr[] = {1,2,1,2,1,3,1};
+    int key = 1;
+    Node* head = NULL;
+
+    for (int i = 6; i >= 0; i--) {
+        Node* n = new Node();
+        n->data = arr[i];
+        n->next = head;
+        head = n;
+    }
+
+    int count = 0;
+    while (head && head->data == key) {
+        Node* t = head;
+        head = head->next;
+        delete t;
+        count++;
+    }
+
+    Node* cur = head;
+    while (cur && cur->next) {
+        if (cur->next->data == key) {
+            Node* t = cur->next;
+            cur->next = t->next;
+            delete t;
+            count++;
+        } else {
+            cur = cur->next;
+        }
+    }
+
+    cout << "Count: " << count << endl;
+    while (head) {
+        cout << head->data << " ";
+        head = head->next;
+    }
+}
+
+
+
+Q3)
+
+
+#include <iostream>
+using namespace std;
+
+struct Node {
+    int data;
+    Node* next;
+};
+
+int main() {
+    Node* head = NULL;
+    for (int i = 5; i >= 1; i--) {
+        Node* n = new Node();
+        n->data = i;
+        n->next = head;
+        head = n;
+    }
+
+    Node* slow = head;
+    Node* fast = head;
+
+    while (fast && fast->next) {
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+
+    cout << slow->data;
+}
+
+
+Q4) 
+
+#include <iostream>
+using namespace std;
+
+struct Node {
+    int data;
+    Node* next;
+};
+
+int main() {
+    Node* head = NULL;
+    for (int i = 4; i >= 1; i--) {
+        Node* n = new Node();
+        n->data = i;
+        n->next = head;
+        head = n;
+    }
+
+    Node* prev = NULL;
+    Node* curr = head;
+
+    while (curr) {
+        Node* next = curr->next;
+        curr->next = prev;
+        prev = curr;
+        curr = next;
+    }
+
+    head = prev;
+    while (head) {
+        cout << head->data << " ";
+        head = head->next;
+    }
+}
+
+
+
+
+
